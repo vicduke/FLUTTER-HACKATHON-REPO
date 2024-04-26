@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/model/todo.dart'; // Import ToDo model class
 import 'package:todolist/widgets/todo_items.dart'; // Import ToDoItem widget
+import 'package:url_launcher/url_launcher.dart';
+
 // Enumeration to represent different task categories
 enum TaskCategory {
   all,
@@ -18,7 +20,8 @@ class TasksScreen extends StatefulWidget {
 class _TasksScreenState extends State<TasksScreen> {
   List<ToDo> todosList = ToDo.todoList(); // List of all tasks
   List<ToDo> _foundToDo = []; // List of tasks to display based on category
-  TaskCategory _selectedCategory = TaskCategory.all; // Default selected category
+  TaskCategory _selectedCategory =
+      TaskCategory.all; // Default selected category
 
   @override
   void initState() {
@@ -34,10 +37,14 @@ class _TasksScreenState extends State<TasksScreen> {
           _foundToDo = todosList; // Display all tasks
           break;
         case TaskCategory.completed:
-          _foundToDo = todosList.where((todo) => todo.isDone).toList(); // Display completed tasks
+          _foundToDo = todosList
+              .where((todo) => todo.isDone)
+              .toList(); // Display completed tasks
           break;
         case TaskCategory.pending:
-          _foundToDo = todosList.where((todo) => !todo.isDone).toList(); // Display pending tasks
+          _foundToDo = todosList
+              .where((todo) => !todo.isDone)
+              .toList(); // Display pending tasks
           break;
       }
     });
@@ -127,6 +134,23 @@ class _TasksScreenState extends State<TasksScreen> {
     // Close the drawer and navigate to the tasks screen
     Navigator.pop(context); // Close the drawer
   }
+  
+  void _launchEmail() async {
+    final Uri _emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'mutaivic10@gmail.com',
+      queryParameters: {
+        'subject': 'Inquiry', //subject of the email
+        'body': 'Type your inquiry here...', //body of the email
+      },
+    );
+
+    if (await canLaunch(_emailLaunchUri.toString())) {
+      await launch(_emailLaunchUri.toString());
+    } else {
+      throw 'Could not launch email';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +179,11 @@ class _TasksScreenState extends State<TasksScreen> {
             const UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Color.fromARGB(255, 136, 48, 7),
-                child: Icon(Icons.account_circle, size: 64.0, color: Colors.white,),
+                child: Icon(
+                  Icons.account_circle,
+                  size: 64.0,
+                  color: Colors.white,
+                ),
               ),
               accountName: Text("Student"),
               accountEmail: Text("student@gmail.com"),
@@ -169,16 +197,20 @@ class _TasksScreenState extends State<TasksScreen> {
             ListTile(
               title: Text("Completed Tasks"),
               leading: Icon(Icons.check_box),
-              onTap: () => _setSelectedCategory(TaskCategory.completed, context),
+              onTap: () =>
+                  _setSelectedCategory(TaskCategory.completed, context),
             ),
             ListTile(
               title: Text("Pending Tasks"),
-              leading: Icon(Icons.incomplete_circle),
+              leading: Icon(Icons.hourglass_top),
               onTap: () => _setSelectedCategory(TaskCategory.pending, context),
             ),
             ListTile(
               title: Text("Help"),
               leading: Icon(Icons.help_center),
+              onTap: () {
+                _launchEmail(); // Call function to launch email
+              },
             ),
             ListTile(
               title: Text("Logout"),
