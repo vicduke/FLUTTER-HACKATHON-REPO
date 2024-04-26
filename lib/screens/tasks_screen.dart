@@ -145,16 +145,17 @@ class _TasksScreenState extends State<TasksScreen> {
             ),
           ],
         ),
-        backgroundColor: const Color(0xFF883007),
+        backgroundColor: Color.fromARGB(255, 136, 48, 7),
         iconTheme: IconThemeData(color: Colors.white),
       ),
       drawer: Drawer(
         elevation: 0,
         child: Column(
           children: [
-            UserAccountsDrawerHeader(
+            const UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage("assets/profile.jpeg"),
+                backgroundColor: Color.fromARGB(255, 136, 48, 7),
+                child: Icon(Icons.account_circle, size: 64.0, color: Colors.white,),
               ),
               accountName: Text("Student"),
               accountEmail: Text("student@gmail.com"),
