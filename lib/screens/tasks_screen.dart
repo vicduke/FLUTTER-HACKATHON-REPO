@@ -134,7 +134,7 @@ class _TasksScreenState extends State<TasksScreen> {
     // Close the drawer and navigate to the tasks screen
     Navigator.pop(context); // Close the drawer
   }
-  
+
   void _launchEmail() async {
     final Uri _emailLaunchUri = Uri(
       scheme: 'mailto',
@@ -185,8 +185,8 @@ class _TasksScreenState extends State<TasksScreen> {
                   color: Colors.white,
                 ),
               ),
-              accountName: Text("Student"),
-              accountEmail: Text("student@gmail.com"),
+              accountName: Text("DefaultUser"),
+              accountEmail: Text("defaultuser@gmail.com"),
             ),
             // Drawer menu items for different task categories
             ListTile(
@@ -232,7 +232,13 @@ class _TasksScreenState extends State<TasksScreen> {
               ),
               child: TextField(
                 onChanged: (keyword) {
-                  // Implement search functionality if needed
+                  setState(() {
+                    _foundToDo = todosList
+                        .where((todo) => todo.todoText
+                            .toLowerCase()
+                            .contains(keyword.toLowerCase()))
+                        .toList();
+                  });
                 },
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(0),
