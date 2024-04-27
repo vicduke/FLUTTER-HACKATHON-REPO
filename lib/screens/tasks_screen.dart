@@ -66,6 +66,25 @@ class _TasksScreenState extends State<TasksScreen> {
     });
   }
 
+  void _editTask(String id, String newTaskText) {
+    setState(() {
+      // Find the index of the task in the todosList
+      int index = todosList.indexWhere((element) => element.id == id);
+      todosList[index] = ToDo(
+        id: id,
+        todoText: newTaskText,
+        isDone: todosList[index].isDone,
+      );
+    });
+  }
+
+  void _handleEditTask(ToDo todo) {
+    setState(() {
+      // Toggle editing mode
+      todo.editing = !todo.editing;
+    });
+  }
+
   // Method to show dialog for adding a new task
   Future<void> _showAddTaskDialog(BuildContext context) async {
     String newTaskText = ''; // Text entered by the user for the new task
@@ -263,6 +282,8 @@ class _TasksScreenState extends State<TasksScreen> {
                   todo: _foundToDo[index],
                   onToDoChanged: _handleToDoChange,
                   onDeleteItem: _deleteToDoItem,
+                  editTask: _editTask,
+                  handleEditTask: _handleEditTask, 
                 ),
               ),
             ),
@@ -277,6 +298,7 @@ class _TasksScreenState extends State<TasksScreen> {
         },
         tooltip: 'Add New Task',
         child: Icon(Icons.add),
+        backgroundColor: const Color.fromARGB(255, 29, 229, 36),
       ),
       backgroundColor: const Color(0xFFCECAB7),
     );
