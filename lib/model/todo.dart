@@ -4,13 +4,16 @@ class ToDo {
   String todoText; // Text content of the todo item
   bool isDone; // Completion status of the todo item (true if completed, false otherwise)
   bool editing;
+  DateTime? reminderDateTime;
   // Constructor for the ToDo class, with required parameters for id and todoText,
   // and an optional parameter for isDone with a default value of false.
   ToDo({
-   required this.id,
-   required this.todoText,
-   this.isDone = false,
-   this.editing = false});
+    required this.id,
+    required this.todoText,
+    this.isDone = false,
+    this.editing = false,
+    this.reminderDateTime,
+  });
 
   // A static method to generate a list of predefined ToDo items.
   // This is a factory method used to create a list of sample ToDo items.

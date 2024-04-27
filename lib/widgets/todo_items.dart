@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/model/todo.dart';
+import 'package:todolist/screens/notification.dart';
 
 // Widget representing a single ToDo item in the list
 class ToDoItem extends StatelessWidget {
@@ -8,6 +9,7 @@ class ToDoItem extends StatelessWidget {
   final Function(String) onDeleteItem; // Callback function for task deletion
   final Function(String, String) editTask;
   final Function(ToDo) handleEditTask;
+  final BuildContext context;
 
   // Constructor for ToDoItem, taking required parameters
   const ToDoItem({
@@ -17,6 +19,7 @@ class ToDoItem extends StatelessWidget {
     required this.onDeleteItem,
     required this.editTask,
     required this.handleEditTask,
+    required this.context,
   }) : super(key: key);
 
   @override
@@ -54,6 +57,7 @@ class ToDoItem extends StatelessWidget {
                 // Handle editing task
                 handleEditTask(todo);
               },
+              tooltip: 'Edit',
               icon: Icon(
                 Icons.edit,
                 color: const Color.fromARGB(255, 95, 94, 94),
@@ -61,6 +65,12 @@ class ToDoItem extends StatelessWidget {
               ),
             ),
             IconButton(
+            tooltip: 'Set a reminder',
+            onPressed: ()
+               => setReminder(context, todo),
+            icon: Icon(Icons.alarm_rounded)),
+            IconButton(
+              tooltip: 'Delete',
               onPressed: () {
                 onDeleteItem(todo.id);
               },
@@ -100,4 +110,4 @@ class ToDoItem extends StatelessWidget {
       ),
     );
   }
-}
+ }
