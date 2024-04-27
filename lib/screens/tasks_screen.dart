@@ -234,6 +234,7 @@ class _TasksScreenState extends State<TasksScreen> {
             ListTile(
               title: Text("Logout"),
               leading: Icon(Icons.logout),
+              onTap: () {},
             ),
           ],
         ),

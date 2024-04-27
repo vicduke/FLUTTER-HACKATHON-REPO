@@ -26,7 +26,6 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
           AndroidNotificationDetails(
         'task_notification_channel',
         'Task Reminders',
-        //'Notifications for task reminders',
         importance: Importance.max,
         priority: Priority.high,
         showWhen: true,
